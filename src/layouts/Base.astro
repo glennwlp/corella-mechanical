@@ -1,0 +1,19 @@
+---
+import '../styles/global.css';
+interface Props { title: string; description?: string }
+const { title, description = 'Corella Mechanical' } = Astro.props;
+---
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+</head>
+<body class="min-h-screen bg-white text-gray-900 antialiased">
+  <main class="mx-auto flex min-h-screen max-w-3xl flex-col items-center justify-center px-6 text-center"><slot /></main>
+</body>
+</html>
