@@ -1,7 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { phone, tel } from '../data/site';
 ---
-<Base title="Page not found | Corella Mechanical">
-  <h1 class="text-4xl font-bold">404</h1>
-  <p class="mt-4 text-lg text-gray-600">Page not found. <a href="/" class="underline">Back to home</a></p>
+<Base title="Page not found | Corella Mechanical" description="That page could not be found.">
+  <section class="bg-ink text-white"><div class="wrap py-24 lg:py-36">
+    <p class="font-display text-[20px] font-bold text-orange">404</p>
+    <h1 class="h1 mt-3 max-w-[700px]">That page has gone offline</h1>
+    <p class="mt-5 max-w-[560px] text-[17px] text-fog">The page you were after is not here. Head back home, browse our projects, or call the 24/7 line if plant is down.</p>
+    <div class="mt-8 flex flex-col gap-3 sm:flex-row"><a href="/" class="btn btn-orange">Back to home</a><a href={tel} class="btn btn-ghost"><Icon name="phone" size={18} />{phone}</a></div>
+  </div></section>
 </Base>

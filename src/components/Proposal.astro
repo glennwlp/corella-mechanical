@@ -1,0 +1,66 @@
+---
+import Icon from './Icon.astro';
+import { phone, tel } from '../data/site';
+interface Props { title?: string; lead?: string }
+const { title = 'Request a proposal', lead = 'Send us the site details and any drawings you have. A project engineer reviews them and replies within one business day.' } = Astro.props;
+const steps = [['Engineer review', 'Your brief and drawings are checked by a mechanical engineer, not a call centre.'], ['Site inspection', 'We walk the plant, measure loads and note access, crane and shutdown needs.'], ['Fixed-price proposal', 'Scope, programme, plant schedule and price in one document.']];
+const types = ['Office', 'Retail', 'Hospitality', 'Medical', 'Education', 'Strata', 'Industrial', 'Residential', 'Other'];
+---
+<section id="proposal" class="scroll-mt-24 bg-ink text-white">
+  <div class="wrap grid gap-10 py-16 lg:grid-cols-[minmax(0,420px)_minmax(0,744px)] lg:justify-between lg:gap-12 lg:py-24">
+    <div class="contents lg:block">
+      <div class="order-1">
+        <h2 class="text-[40px] sm:text-[52px] lg:text-[64px]">{title}</h2>
+        <p class="mt-5 text-[16px] leading-relaxed text-fog sm:text-[18px]">{lead}</p>
+      </div>
+      <div class="order-3 lg:mt-10">
+        <ol class="border-t border-white/15">
+          {steps.map(([t, d], i) => <li class="flex gap-4 border-b border-white/15 py-5"><span class="font-display text-[28px] font-bold leading-none text-orange">{i + 1}</span><div><p class="text-[16px] font-semibold">{t}</p><p class="mt-1 text-[14.5px] text-steel">{d}</p></div></li>)}
+        </ol>
+        <p class="mt-6 flex flex-wrap items-center gap-3 text-[15px] text-fog">Prefer to talk it through? <a href={tel} class="inline-flex items-center gap-2 font-semibold text-white hover:text-orange"><Icon name="phone" size={16} class="text-orange" />{phone}</a></p>
+      </div>
+    </div>
+    <form class="order-2 bg-white p-5 text-ink sm:p-12 lg:self-start" data-proposal novalidate>
+      <h3 class="text-[24px] sm:text-[28px]">Project details</h3>
+      <div class="mt-6 grid gap-5 sm:grid-cols-2 sm:gap-x-6">
+        <div><label class="field-label" for="pf-name">Full name</label><input id="pf-name" name="name" class="field" placeholder="Jordan Lee" autocomplete="name" required /></div>
+        <div><label class="field-label" for="pf-co">Company</label><input id="pf-co" name="company" class="field" placeholder="Company or strata plan" autocomplete="organization" /></div>
+        <div><label class="field-label" for="pf-email">Email</label><input id="pf-email" name="email" type="email" class="field" placeholder="you@company.com.au" autocomplete="email" required /></div>
+        <div><label class="field-label" for="pf-phone">Phone</label><input id="pf-phone" name="phone" type="tel" class="field" placeholder="04xx xxx xxx" autocomplete="tel" /></div>
+        <div><label class="field-label" for="pf-type">Site type</label><select id="pf-type" name="type" class="field"><option value="">Select a site type</option>{types.map((t) => <option>{t}</option>)}</select></div>
+        <div><label class="field-label" for="pf-n">Number of sites</label><select id="pf-n" name="sites" class="field"><option>1 site</option><option>2 to 5 sites</option><option>6 to 20 sites</option><option>20+ sites</option></select></div>
+        <div class="sm:col-span-2"><label class="field-label" for="pf-addr">Site address</label><input id="pf-addr" name="address" class="field" placeholder="Street address, suburb, postcode" autocomplete="street-address" /></div>
+        <div class="sm:col-span-2">
+          <span class="field-label">Drawings and documents (optional)</span>
+          <label class="flex cursor-pointer items-start gap-4 border border-dashed border-mute bg-bg-2 p-5 hover:border-orange">
+            <Icon name="up" size={24} class="mt-0.5 shrink-0 text-orange" />
+            <span><span class="block text-[15px] font-semibold"><span class="hidden sm:inline">Attach drawings, plans or site photos</span><span class="sm:hidden">Attach drawings or photos</span></span><span class="mt-1 block text-[13px] text-body" data-files>Drop files here or browse. PDF, DWG, JPG or PNG up to 50 MB each.</span></span>
+            <input type="file" name="files" multiple accept=".pdf,.dwg,.jpg,.jpeg,.png" class="sr-only" />
+          </label>
+        </div>
+      </div>
+      <div class="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+        <button class="btn btn-orange !min-h-[52px] w-full sm:w-auto" type="submit">Request a Proposal</button>
+        <p class="text-[13.5px] text-body">Reply within one business day. No obligation.</p>
+      </div>
+      <p class="mt-4 hidden border-l-4 border-orange bg-bg-2 p-4 text-[14px]" role="status" data-msg></p>
+    </form>
+  </div>
+</section>
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-proposal]').forEach((f) => {
+    const msg = f.querySelector<HTMLElement>('[data-msg]')!;
+    f.querySelector<HTMLInputElement>('input[type=file]')?.addEventListener('change', (e) => {
+      const n = (e.target as HTMLInputElement).files?.length ?? 0;
+      if (n) f.querySelector('[data-files]')!.textContent = `${n} file${n > 1 ? 's' : ''} selected`;
+    });
+    f.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = f.elements.namedItem('name') as HTMLInputElement, email = f.elements.namedItem('email') as HTMLInputElement;
+      msg.classList.remove('hidden');
+      if (!name.value.trim() || !/^\S+@\S+\.\S+$/.test(email.value)) { msg.textContent = 'Please add your name and a valid email address.'; (name.value.trim() ? email : name).focus(); return; }
+      msg.textContent = 'Thanks — this is a demo site, so nothing was sent. On a live site, a project engineer would reply within one business day.';
+      f.reset();
+    });
+  });
+</script>

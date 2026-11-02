@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import Pic from '../components/Pic.astro';
+import TrustStrip from '../components/TrustStrip.astro';
+import SecHead from '../components/SecHead.astro';
+import BreakdownBand from '../components/BreakdownBand.astro';
+import Proposal from '../components/Proposal.astro';
+import { phone, tel } from '../data/site';
+const tiers = [
+  { code: 'ESSENTIAL', name: 'Essential', price: 'From $2,400', per: 'per site, per year [sample]', cta: 'Ask about Essential', items: ['Two scheduled services a year', 'Filter and coil cleaning', 'Refrigerant leak checks and log', 'Service report after every visit', 'Business-hours breakdown response'] },
+  { code: 'PRIORITY', name: 'Priority', price: 'From $5,900', per: 'per site, per year [sample]', cta: 'Request a Proposal', dark: true, items: ['Four scheduled services a year', 'Everything in Essential', '4 hour on-site target, 24/7', 'Discounted breakdown labour', 'Annual plant condition report', 'Essential services records (AS 1851)'] },
+  { code: 'PORTFOLIO', name: 'Portfolio', price: 'Custom', per: 'multi-site agreement [sample]', cta: 'Ask about Portfolio', items: ['Monthly or quarterly visits per site', 'Everything in Priority', 'Dedicated account engineer', 'Portfolio dashboard and monthly reporting', 'Capital works planning and budgets', 'Single invoice across all sites'] },
+];
+const comp = [['AS/NZS 3666', 'Microbial control of cooling towers and air-handling systems'], ['AS 1851', 'Routine service of fire dampers and smoke control'], ['AS 1668', 'Ventilation and kitchen exhaust performance'], ['ARC records', 'Refrigerant handling, leak tests and gas logs']];
+---
+<Base title="Commercial HVAC Maintenance Contracts | Corella Mechanical" description="Scheduled servicing, compliance records and priority 24/7 response for one fixed annual price, across Sydney and the Hunter." active="maintenance">
+  <PageHero crumbs={[['Home', '/'], ['Maintenance Contracts']]} title="Maintenance contracts that prevent the 3pm breakdown" lead="Scheduled servicing, compliance records and priority response for one fixed annual price. Every visit is logged to your site portal." image="p5463581" alt="Technician servicing a commercial condenser" tag={['CU-14', 'Quarterly service complete, 3 Oct']} tagPos="lg:left-[15%] lg:top-[22%]">
+    <a href="#audit" class="btn btn-orange">Book a free site audit</a>
+    <a href={tel} class="btn btn-ghost"><Icon name="phone" size={18} />24/7 Breakdowns: {phone}</a>
+  </PageHero>
+  <TrustStrip />
+  <section class="sec"><div class="wrap">
+    <SecHead title="Three levels of cover" lead="Prices are per site per year and depend on plant size and count. Every tier can be tailored [sample pricing]." />
+    <div class="mt-10 grid gap-4 lg:mt-14 lg:grid-cols-3">
+      {tiers.map((t) => (
+        <article class:list={['flex flex-col p-6 sm:p-7', t.dark ? 'bg-ink text-white' : 'bg-bg-2']}>
+          {t.dark ? <span class="tag self-start"><span><b class="!text-[15px]">{t.code}</b><span>Most chosen by facility managers</span></span></span> : <p class="py-1.5 font-display text-[15px] font-bold">{t.code}</p>}
+          <h3 class="mt-5 text-[36px] sm:text-[40px]">{t.name}</h3>
+          <p class:list={['mt-1 font-display text-[30px] font-bold sm:text-[34px]', t.dark && 'text-orange']}>{t.price}</p>
+          <p class:list={['text-[13.5px]', t.dark ? 'text-steel' : 'text-body']}>{t.per}</p>
+          <ul class="mt-7 space-y-3 text-[15px]">{t.items.map((i) => <li class="flex gap-3"><Icon name="check" size={18} class="mt-0.5 shrink-0 text-orange" /><span class:list={[t.dark && 'text-bg']}>{i}</span></li>)}</ul>
+          <a href="#proposal" class:list={['btn mt-auto w-full !min-h-[50px]', t.dark ? 'btn-orange' : 'btn-line']} style="margin-top:max(32px,auto)">{t.cta}</a>
+        </article>
+      ))}
+    </div>
+  </div></section>
+  <section class="sec bg-bg"><div class="wrap grid gap-10 lg:grid-cols-[minmax(0,580px)_minmax(0,600px)] lg:justify-between lg:gap-12">
+    <div>
+      <h2 class="h2">Compliance handled, records ready for audit</h2>
+      <p class="mt-6 text-[16px] leading-relaxed text-body sm:text-[17px]">Your contract includes the inspections and paperwork that building managers, insurers and councils ask for. Reports land in your portal within 24 hours of each visit.</p>
+      <dl class="mt-8 border-t border-line">{comp.map(([a, b]) => <div class="grid gap-1 border-b border-line py-4 sm:grid-cols-[174px_1fr] sm:items-center sm:gap-4"><dt class="font-display text-[22px] font-bold">{a}</dt><dd class="text-[15px] text-body">{b}</dd></div>)}</dl>
+    </div>
+    <Pic name="p8961133" alt="Technician recording a service report on site" class="aspect-[600/496] lg:self-start" sizes="(min-width:1024px) 600px, 100vw" widths={[400, 800, 1200]} />
+  </div></section>
+  <section id="audit" class="scroll-mt-24 bg-orange"><div class="wrap grid gap-8 py-14 lg:grid-cols-[minmax(0,640px)_auto] lg:items-center lg:justify-between lg:py-24">
+    <div><h2 class="h2">Free site audit for new contracts</h2><p class="mt-5 max-w-[600px] text-[16px] sm:text-[17px]">An engineer inspects your plant, photographs every unit and gives you a written condition report, whether or not you sign up [sample offer].</p></div>
+    <div><a href="#proposal" class="btn btn-ink w-full sm:w-[300px] !min-h-[52px]">Book a free site audit</a><p class="mt-4 text-[16px]">Or call <a href={tel} class="font-bold hover:underline">{phone}</a></p></div>
+  </div></section>
+  <BreakdownBand />
+  <Proposal />
+</Base>

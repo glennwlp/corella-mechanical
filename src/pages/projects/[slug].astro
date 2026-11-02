@@ -1,0 +1,55 @@
+---
+import Base from '../../layouts/Base.astro';
+import Pic from '../../components/Pic.astro';
+import Schedule from '../../components/Schedule.astro';
+import Proposal from '../../components/Proposal.astro';
+import Icon from '../../components/Icon.astro';
+import { projects, type Project } from '../../data/projects';
+export function getStaticPaths() {
+  return projects.map((p, i) => ({ params: { slug: p.slug }, props: { p, next: projects[(i + 1) % projects.length] } }));
+}
+const { p, next } = Astro.props as { p: Project; next: Project };
+const facts = [['Client', p.client], ['Location', p.location], ['Systems', p.systems], ['Programme', p.programme], ['Contract value', p.value]];
+---
+<Base title={`${p.code}: ${p.title} | Corella Mechanical`} description={`${p.sector} HVAC case study, ${p.location}. ${p.result}`} active="projects">
+  <section class="relative flex min-h-[420px] items-end overflow-hidden bg-ink text-white lg:min-h-[600px]">
+    <Pic name={p.img} alt={p.title} eager class="!absolute inset-0" sizes="100vw" widths={[640, 1024, 1440, 2000]} />
+    <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/10"></div>
+    <div class="wrap relative pt-40 pb-10 lg:pb-16">
+      <nav aria-label="Breadcrumb" class="text-[12.5px] text-mist sm:text-[13.5px]"><a href="/" class="hidden hover:text-white sm:inline">Home</a><span class="mx-1.5 hidden sm:inline">/</span><a href="/projects/" class="hover:text-white">Projects</a><span class="mx-1.5">/</span><span aria-current="page">{p.code}</span></nav>
+      <span class="tag mt-5"><span><b>{p.code}</b><span>{p.sector}, {p.place}</span></span></span>
+      <h1 class="mt-5 max-w-[900px] text-[32px] leading-[1.06] sm:text-[44px] lg:text-[58px]">{p.title}</h1>
+    </div>
+  </section>
+  <section class="bg-bg"><dl class="wrap grid grid-cols-2 gap-x-4 gap-y-5 py-6 sm:grid-cols-3 lg:grid-cols-5 lg:py-8">{facts.map(([a, b], i) => <div class:list={[i === 0 && 'col-span-2 sm:col-span-1']}><dt class="text-[12.5px] text-body sm:text-[13px]">{a}</dt><dd class="mt-1 text-[15.5px] font-semibold sm:text-[16px]">{b}</dd></div>)}</dl></section>
+  <section class="sec"><div class="wrap space-y-12 lg:space-y-20">
+    {[['The challenge', p.challenge, null], ['The solution', p.solution, p.points], ['The result', p.result, null]].map(([h, t, pts]) => (
+      <div class="grid gap-4 lg:grid-cols-[minmax(0,320px)_minmax(0,720px)] lg:justify-between lg:gap-12">
+        <h2 class="text-[32px] sm:text-[40px]">{h}</h2>
+        <div><p class="text-[16.5px] leading-relaxed sm:text-[18px]">{t}</p>
+          {pts && <ul class="mt-6 space-y-3">{(pts as string[]).map((x) => <li class="flex gap-3 text-[15.5px] sm:text-[16.5px]"><Icon name="check" size={20} class="mt-0.5 shrink-0 text-orange" />{x}</li>)}</ul>}
+          {h === 'The result' && <dl class="mt-10 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-line pt-8 sm:grid-cols-4">{p.results.map(([a, b]) => <div><dt class="font-display text-[40px] font-bold leading-none sm:text-[52px]">{a}</dt><dd class="mt-2 text-[14px] text-body">{b}</dd></div>)}</dl>}
+        </div>
+      </div>))}
+  </div></section>
+  <section class="sec bg-bg"><div class="wrap">
+    <h2 class="text-[32px] sm:text-[40px]">Plant installed</h2>
+    <div class="mt-8 lg:mt-10"><Schedule head={['Code', 'Item', 'Quantity', 'Capacity', 'Location']} rows={p.plant.map(([c, i, q, cap, l]) => [c, i, q, cap, l])} cols="lg:grid-cols-[minmax(0,150fr)_minmax(0,470fr)_minmax(0,200fr)_minmax(0,200fr)_minmax(0,228fr)]" note="Schedule is a sample for this demo." /></div>
+  </div></section>
+  <section class="sec"><div class="wrap grid gap-4 lg:grid-cols-[minmax(0,816fr)_minmax(0,416fr)]">
+    <Pic name={p.gallery[0]} alt={`${p.title}, works in progress`} class="aspect-[816/408]" sizes="(min-width:1024px) 816px, 100vw" widths={[480, 816, 1400]} />
+    <div class="grid grid-cols-2 gap-4 lg:grid-cols-1">
+      <Pic name={p.gallery[1]} alt={`${p.title}, completed space`} class="aspect-[416/196]" sizes="(min-width:1024px) 416px, 50vw" widths={[420, 840]} />
+      <Pic name={p.gallery[2]} alt={`${p.title}, plant detail`} class="aspect-[416/196]" sizes="(min-width:1024px) 416px, 50vw" widths={[420, 840]} />
+    </div>
+  </div></section>
+  <section class="bg-ink text-white"><figure class="wrap py-16 lg:py-24">
+    <blockquote class="max-w-[1000px] font-display text-[26px] leading-[1.2] font-medium sm:text-[40px]">“{p.quote}”</blockquote>
+    <figcaption class="mt-6 text-[15px] text-fog">{p.quoteBy}</figcaption>
+  </figure></section>
+  <section class="py-12 lg:py-16"><div class="wrap flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+    <a href={`/projects/${next.slug}/`} class="group"><p class="text-[14px] text-body">Next project</p><p class="mt-2 max-w-[668px] font-display text-[26px] leading-tight font-bold group-hover:text-orange-dark sm:text-[32px]">{next.title} <Icon name="arrow" size={26} class="inline align-[-3px] text-orange" /></p></a>
+    <a href="/projects/" class="ulink self-start text-[15px] lg:self-end">See all projects</a>
+  </div></section>
+  <Proposal />
+</Base>

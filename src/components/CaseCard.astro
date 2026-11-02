@@ -1,0 +1,21 @@
+---
+import Pic from './Pic.astro';
+import type { Project } from '../data/projects';
+interface Props { p: Project; full?: boolean }
+const { p, full = false } = Astro.props;
+const [v, l] = p.stats[p.key];
+---
+<a href={`/projects/${p.slug}/`} class="group flex flex-col bg-bg-2 transition hover:shadow-[0_10px_30px_rgba(31,35,40,.12)]">
+  <Pic name={p.img} alt={p.title} class:list={['aspect-[405/228]', full && 'lg:aspect-[405/280]']} sizes="(min-width:1024px) 405px, (min-width:640px) 50vw, 100vw" widths={[420, 640, 840]}>
+    <span class="tag absolute bottom-4 left-4 sm:left-6"><span><b>{p.code}</b><span>{p.sector}, {p.place}</span></span></span>
+  </Pic>
+  <div class="flex flex-1 flex-col p-5 sm:p-6">
+    <h3 class:list={['text-[22px] leading-[1.15] group-hover:text-orange-dark', full ? 'sm:text-[26px] xl:text-[28px]' : 'sm:text-[24px]']}>{p.title}</h3>
+    {full ? (
+      <dl class="mt-6 grid grid-cols-3 gap-3 border-t border-line pt-5">{p.stats.map(([a, b]) => <div><dt class="font-display text-[26px] font-bold leading-none sm:text-[32px]">{a}</dt><dd class="mt-1.5 text-[12.5px] leading-snug text-body sm:text-[13px]">{b}</dd></div>)}</dl>
+    ) : (
+      <p class="mt-5 flex items-baseline gap-3 border-t border-line pt-4"><span class="font-display text-[30px] font-bold leading-none">{v}</span><span class="text-[13.5px] text-body">{l} [sample]</span></p>
+    )}
+    <span class="ulink mt-auto self-start pt-6 text-[14.5px] font-semibold">Read the case study</span>
+  </div>
+</a>

@@ -1,0 +1,16 @@
+---
+interface Props { head: string[]; rows: string[][]; note?: string; cols?: string }
+const { head, rows, note, cols = 'lg:grid-cols-[minmax(0,110fr)_minmax(0,250fr)_minmax(0,330fr)_minmax(0,180fr)_minmax(0,378fr)]' } = Astro.props;
+---
+<div>
+  <div class:list={['hidden bg-ink px-5 py-3.5 text-[13.5px] font-semibold text-white lg:grid', cols]}>{head.map((h) => <span>{h}</span>)}</div>
+  <ul class="border-t border-line lg:border-t-0">
+    {rows.map(([c, ...r], i) => (
+      <li class:list={['grid grid-cols-[64px_1fr] gap-x-4 gap-y-1 border-b border-line px-0 py-5 lg:items-center lg:gap-0 lg:px-5 lg:py-6', cols, i % 2 ? 'lg:bg-bg-2' : 'lg:bg-white']}>
+        <span class="row-span-4 self-start lg:row-span-1 lg:self-center"><span class="inline-block bg-orange px-2.5 py-1 font-display text-[15px] font-bold lg:bg-transparent lg:p-0 lg:text-[18px]">{c}</span></span>
+        {r.map((v, j) => <span class:list={[j === 0 ? 'font-display text-[20px] font-bold leading-tight lg:pr-4 lg:text-[22px]' : 'text-[14.5px] text-body lg:pr-6 lg:text-[15px]', j === 2 && 'font-semibold !text-ink', j === 3 && 'hidden md:block']}>{v}</span>)}
+      </li>
+    ))}
+  </ul>
+  {note && <p class="mt-4 text-[13px] text-body">{note}</p>}
+</div>

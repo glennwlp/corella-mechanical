@@ -1,0 +1,11 @@
+---
+import { trust } from '../data/site';
+---
+<section class="bg-bg" aria-label="Licences and credentials">
+  <ul class="wrap hidden py-6 lg:grid lg:grid-cols-5">
+    {trust.map(([t, d], i) => <li class:list={['pr-4', i > 0 && 'border-l border-line pl-4 xl:pl-6']}><p class="font-display text-[24px] font-bold leading-tight xl:text-[26px]">{t}</p><p class="mt-1 text-[13px] leading-snug text-body">{d}</p></li>)}
+  </ul>
+  <ul class="wrap py-3 lg:hidden">
+    {trust.map(([t, , m], i) => <li class:list={['grid grid-cols-[120px_1fr] items-center gap-3 py-3 sm:grid-cols-[160px_1fr]', i > 0 && 'border-t border-line']}><p class="font-display text-[20px] font-bold">{t}</p><p class="text-[13px] text-body">{m}</p></li>)}
+  </ul>
+</section>

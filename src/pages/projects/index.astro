@@ -1,0 +1,50 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Icon from '../../components/Icon.astro';
+import TrustStrip from '../../components/TrustStrip.astro';
+import CaseCard from '../../components/CaseCard.astro';
+import Proposal from '../../components/Proposal.astro';
+import { phone, tel } from '../../data/site';
+import { projects } from '../../data/projects';
+const sectors = ['Office', 'Retail', 'Hospitality', 'Medical', 'Education', 'Strata'];
+const label = (s: string) => (s === 'Office' ? 'Offices' : s);
+---
+<Base title="Projects and Case Studies | Corella Mechanical" description="Commercial HVAC case studies from Sydney and the Hunter. Every project lists the constraint we worked around and the result we measured." active="projects">
+  <PageHero crumbs={[['Home', '/'], ['Projects']]} title="Projects, with the numbers" lead="Every case study lists the constraint we worked around and the result we measured. All projects and figures on this demo site are samples." image="p2464420" alt="Commercial building under construction">
+    <a href="#proposal" class="btn btn-orange">Request a Proposal</a>
+    <a href={tel} class="btn btn-ghost"><Icon name="phone" size={18} />24/7 Breakdowns: {phone}</a>
+  </PageHero>
+  <TrustStrip />
+  <section class="sec" data-filter><div class="wrap">
+    <div class="flex flex-col gap-6 lg:flex-row lg:justify-between">
+      <div class="min-w-0"><p class="text-[13.5px] font-semibold text-body">Filter by sector</p>
+        <div class="-mx-5 mt-3 flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
+          <button type="button" class="fchip is-on" data-sector="all" aria-pressed="true">All <span>{projects.length}</span></button>
+          {sectors.map((s) => <button type="button" class="fchip" data-sector={s} aria-pressed="false">{label(s)} <span>{projects.filter((p) => p.sector === s).length}</span></button>)}
+        </div></div>
+      <div><p class="text-[13.5px] font-semibold text-body">Branch</p>
+        <div class="mt-3 flex flex-wrap gap-2">{['Both branches', 'Sydney', 'Newcastle'].map((b, i) => <button type="button" class:list={['fchip', i === 0 && 'is-on']} data-branch={i ? b : 'all'} aria-pressed={i === 0 ? 'true' : 'false'}>{b}</button>)}</div></div>
+    </div>
+    <p class="mt-8 text-[14px] text-body" data-count aria-live="polite">Showing {projects.length} of {projects.length} projects</p>
+    <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{projects.map((p) => <div data-s={p.sector} data-b={p.branch} class="flex [&>a]:w-full"><CaseCard p={p} /></div>)}</div>
+    <p class="mt-10 hidden text-center text-[15px] text-body" data-empty>No sample projects match that filter yet. <button type="button" class="font-semibold underline" data-reset>Show all</button></p>
+  </div></section>
+  <Proposal />
+</Base>
+<script>
+  const root = document.querySelector('[data-filter]')!;
+  let s = 'all', b = 'all';
+  const cards = [...root.querySelectorAll<HTMLElement>('[data-s]')];
+  const apply = () => {
+    let n = 0;
+    cards.forEach((c) => { const on = (s === 'all' || c.dataset.s === s) && (b === 'all' || c.dataset.b === b); c.hidden = !on; if (on) n++; });
+    root.querySelector('[data-count]')!.textContent = `Showing ${n} of ${cards.length} projects`;
+    root.querySelector('[data-empty]')!.classList.toggle('hidden', n > 0);
+    root.querySelectorAll<HTMLElement>('[data-sector]').forEach((x) => { const on = x.dataset.sector === s; x.classList.toggle('is-on', on); x.setAttribute('aria-pressed', String(on)); });
+    root.querySelectorAll<HTMLElement>('[data-branch]').forEach((x) => { const on = x.dataset.branch === b; x.classList.toggle('is-on', on); x.setAttribute('aria-pressed', String(on)); });
+  };
+  root.querySelectorAll<HTMLElement>('[data-sector]').forEach((x) => x.addEventListener('click', () => { s = x.dataset.sector!; apply(); }));
+  root.querySelectorAll<HTMLElement>('[data-branch]').forEach((x) => x.addEventListener('click', () => { b = x.dataset.branch!; apply(); }));
+  root.querySelector('[data-reset]')!.addEventListener('click', () => { s = b = 'all'; apply(); });
+</script>

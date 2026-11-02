@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import TrustStrip from '../components/TrustStrip.astro';
+import SecHead from '../components/SecHead.astro';
+import Schedule from '../components/Schedule.astro';
+import Steps from '../components/Steps.astro';
+import SplitRows from '../components/SplitRows.astro';
+import Featured from '../components/Featured.astro';
+import Proposal from '../components/Proposal.astro';
+import { phone, tel } from '../data/site';
+import { projects } from '../data/projects';
+const rows = [
+  ['VRF', 'VRF / VRV systems', 'Multi-tenant offices, hotels, medical suites', '20 to 400 kW', 'Individual zone control and heat recovery between zones.'],
+  ['CHW', 'Chilled water and AHUs', 'Large offices, hospitals, shopping centres', '400 kW and up', 'Central plant efficiency and long service life.'],
+  ['PAC', 'Packaged rooftop units', 'Retail, warehouses, gyms, single-floor sites', '15 to 150 kW', 'Fast install by crane lift, minimal internal works.'],
+  ['FCU', 'Ceiling cassettes and ducted splits', 'Clinics, small offices, cafés, classrooms', '3.5 to 25 kW', 'Discreet, quiet, simple to maintain.'],
+  ['EXH', 'Ventilation and kitchen exhaust', 'Commercial kitchens, car parks, labs', 'To AS 1668.2', 'Code-compliant air change rates and fire-rated ductwork.'],
+  ['BMS', 'Controls and building management', 'Any site with more than one system', 'Up to 2,000 points', 'Remote monitoring, alarms and energy reporting.'],
+];
+const steps: [string, string, string][] = [['Site audit', 'Week 1', 'We inspect existing plant, electrical capacity, roof access and crane positions.'], ['Load and design', 'Weeks 1 to 2', 'Heat load calculations, system selection and coordinated drawings.'], ['Fixed-price proposal', 'Week 2', 'Scope, programme, plant schedule and a price that holds.'], ['Install', 'Weeks 3 to 8', 'Staged works, after-hours where needed, crane lifts booked early.'], ['Commission', 'Week 9', 'Air balancing, controls testing and a signed commissioning report.'], ['Maintain', 'Ongoing', 'Your site moves straight onto a maintenance contract if you want one.']];
+const types: [string, string][] = [['New builds', 'Design and construct, or install to the consultant’s design. Early involvement saves plant space and money.'], ['Tenancy fit-outs', 'Make-good, reconfiguration and new zones, coordinated with your builder’s programme.'], ['Plant replacement', 'End-of-life chillers, condensers and AHUs swapped with staged shutdowns.'], ['Energy upgrades', 'Controls, VSDs and right-sized plant, with measured savings reported back.']];
+---
+<Base title="Commercial HVAC Design and Installation | Corella Mechanical" description="One engineering team for new builds, tenancy fit-outs and plant replacements across Sydney and the Hunter, from load calculation to commissioning report." active="commercial">
+  <PageHero crumbs={[['Home', '/'], ['Commercial']]} title="Commercial HVAC design, installation and service" lead="One engineering team for new builds, tenancy fit-outs and plant replacements, from load calculation to commissioning report." image="p8065903" alt="Commercial air-conditioning plant on a city rooftop" tag={['AHU-03', 'Replaced in one weekend shutdown']} tagPos="lg:left-[20%] lg:top-[28%]">
+    <a href="#proposal" class="btn btn-orange">Request a Proposal</a>
+    <a href={tel} class="btn btn-ghost"><Icon name="phone" size={18} />24/7 Breakdowns: {phone}</a>
+  </PageHero>
+  <TrustStrip />
+  <section class="sec"><div class="wrap">
+    <SecHead title="The systems we design and install" lead="Every proposal includes a plant schedule like this one, so you can see what is going in, why, and what it will cost to run." />
+    <div class="mt-10 lg:mt-14"><Schedule head={['Code', 'System', 'Best for', 'Typical capacity', 'Why choose it']} rows={rows} note="Capacities are indicative and depend on site conditions [sample]." /></div>
+  </div></section>
+  <section class="sec bg-bg"><div class="wrap">
+    <SecHead title="How a project runs" lead="A typical 1,000 m² office fit-out takes six to ten weeks from first site visit to handover [sample]." />
+    <div class="mt-10 lg:mt-14"><Steps steps={steps} /></div>
+  </div></section>
+  <SplitRows img="p32343521" alt="Crane lifting a condenser onto an office roof" title="New builds, fit-outs and plant replacement" rows={types} />
+  <Featured p={projects[0]} blurb="Twelve floors moved from a 1990s chilled water plant to VRF with heat recovery. Each floor was cut over on a Friday night and handed back by Monday 7am." />
+  <Proposal />
+</Base>

@@ -1,0 +1,25 @@
+---
+import Icon from './Icon.astro';
+import Pic from './Pic.astro';
+import { tel, phone } from '../data/site';
+const rows = [['Sydney metro', '4 hrs'], ['Newcastle and Lake Macquarie', '4 hrs'], ['Maitland, Cessnock, Port Stephens', '6 hrs'], ['Central Coast', '6 hrs']];
+---
+<section id="breakdowns" class="relative scroll-mt-24 overflow-hidden bg-ink text-white">
+  <Pic name="p8732669" alt="" class="!absolute inset-0" imgClass="opacity-50" tag={false} sizes="100vw" widths={[800, 1440, 2000]} />
+  <div class="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/60"></div>
+  <div class="wrap relative grid gap-10 py-16 lg:grid-cols-[minmax(0,560px)_minmax(0,520px)] lg:justify-between lg:py-[84px]">
+    <div>
+      <h2 class="text-[36px] sm:text-[52px]">Plant down after hours?</h2>
+      <p class="mt-4 max-w-[520px] text-[16px] leading-relaxed text-mist sm:text-[17px]">Call the 24/7 line and a technician is dispatched within 30 minutes, day or night. Contract sites go to the front of the queue.</p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a href={tel} class="btn btn-orange"><Icon name="phone" size={18} />Call {phone}</a>
+        <a href="/maintenance-contracts/" class="btn btn-ghost">See maintenance contracts</a>
+      </div>
+    </div>
+    <div>
+      <p class="text-[14px] font-semibold">On-site response targets [sample]</p>
+      <ul class="mt-3">{rows.map(([a, b]) => <li class="flex items-center justify-between gap-4 border-b border-white/20 py-3"><span class="text-[15px] text-mist sm:text-[16px]">{a}</span><span class="font-display text-[24px] font-bold sm:text-[26px]">{b}</span></li>)}</ul>
+    </div>
+  </div>
+  <span class="sample !top-auto bottom-4">Sample imagery</span>
+</section>

@@ -1,0 +1,16 @@
+---
+import Pic from './Pic.astro';
+interface Props { img: string; alt: string; title: string; rows: [string, string][]; lead?: string; bg?: string; aspect?: string }
+const { img, alt, title, rows, lead, bg = '', aspect = 'sm:aspect-[600/536]' } = Astro.props;
+---
+<section class:list={['sec', bg]}>
+  <div class="wrap grid gap-10 lg:grid-cols-[minmax(0,600px)_minmax(0,584px)] lg:items-start lg:justify-between lg:gap-12">
+    <Pic name={img} alt={alt} class:list={['aspect-[4/3]', aspect]} sizes="(min-width:1024px) 600px, 100vw" widths={[400, 800, 1200]} />
+    <div>
+      <h2 class="h2" set:html={title} />
+      {lead && <p class="mt-5 text-[16px] leading-relaxed text-body sm:text-[17px]">{lead}</p>}
+      <dl class="mt-8 border-t border-line">{rows.map(([a, b]) => <div class="grid gap-1.5 border-b border-line py-5 md:grid-cols-[180px_1fr] md:gap-7"><dt class="font-display text-[22px] font-bold leading-tight">{a}</dt><dd class="text-[15px] leading-relaxed text-body">{b}</dd></div>)}</dl>
+      <slot />
+    </div>
+  </div>
+</section>

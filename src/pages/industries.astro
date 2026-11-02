@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import Pic from '../components/Pic.astro';
+import TrustStrip from '../components/TrustStrip.astro';
+import Proposal from '../components/Proposal.astro';
+import { phone, tel, industries } from '../data/site';
+const detail: Record<string, [string, string[], string[], string, string, string?]> = {
+  offices: ['Tenant comfort, NABERS ratings and after-hours loads in multi-tenant buildings.', ['VRF', 'CHW', 'BMS'], ['NABERS Energy improvement plans and measured savings', 'After-hours AC metering and tenant billing support', 'Fit-outs to landlord design standards', 'Floor-by-floor works with tenants in place'], '38%', 'lower HVAC energy, Macquarie Park [sample]', 'prj-2291'],
+  retail: ['Centres, flagship stores and supermarkets where a hot floor costs sales by the hour.', ['PAC', 'CHW', 'EXH'], ['Night and pre-open works only', 'Centre management permits and inductions handled', 'Integration with refrigerated display systems', 'Tenancy make-good and handback'], '48', 'tenancies maintained in one centre [sample]', 'prj-2275'],
+  hospitality: ['Kitchens, dining rooms, bars and hotel floors with long trading hours and no tolerance for noise.', ['EXH', 'VRF', 'FCU'], ['Kitchen exhaust and make-up air to AS 1668.2', 'Guest room noise limits met and measured', 'Peak-season 24/7 response', 'Grease duct cleaning schedules'], '3', 'venues on one contract [sample]', 'prj-2340'],
+  medical: ['Clinics, day hospitals, theatres and pathology, where air quality is part of patient safety.', ['CHW', 'AHU', 'HEPA'], ['Pressure regimes, HEPA filtration and air change rates', 'AS/NZS 3666 and infection control records', 'Works scheduled around patient and surgical lists', 'Validated commissioning reports'], 'ISO 7', 'theatre class held during works [sample]', 'prj-2317'],
+  education: ['Public and independent schools, early learning and TAFE, with work packed into school holidays.', ['FCU', 'VRF', 'AIR'], ['Holiday-period programmes planned a term ahead', 'Classroom fresh air and CO₂ monitoring', 'Working with children checks for every technician', 'Staged works across multiple campuses'], '20', 'classrooms upgraded in six weeks [sample]', 'prj-2302'],
+  strata: ['Residential and mixed-use buildings run by owners corporations and strata managers.', ['CHW', 'VRF', 'EXH'], ['Clear quotes for committee meetings', 'Common-area and central plant maintenance', 'By-law and approval guidance for owner upgrades', 'Car park and garbage room ventilation'], '112', 'apartments on one central plant contract [sample]', 'prj-2288'],
+};
+---
+<Base title="Industries We Serve | Corella Mechanical" description="Commercial HVAC for offices, retail, hospitality, medical, education and strata sites, planned around trading hours, patient lists and school terms." active="industries">
+  <PageHero crumbs={[['Home', '/'], ['Industries']]} title="HVAC for the sites you manage" lead="Each sector has its own rules: trading hours, patient lists, school terms, owners corporation approvals. We plan the work around them." image="p6794966" alt="Commercial building plant room">
+    <a href="#proposal" class="btn btn-orange">Request a Proposal</a>
+    <a href={tel} class="btn btn-ghost"><Icon name="phone" size={18} />24/7 Breakdowns: {phone}</a>
+  </PageHero>
+  <TrustStrip />
+  <nav aria-label="Sectors" class="sticky top-16 z-30 border-b border-line bg-white xl:top-[88px]">
+    <ul class="wrap flex gap-6 overflow-x-auto py-4 [scrollbar-width:none] lg:gap-0 lg:py-10">{industries.map((i) => <li class="shrink-0 lg:w-[208px]"><a href={`#${i.slug}`} class="font-display text-[20px] font-bold hover:text-orange-dark lg:text-[26px]">{i.name}</a></li>)}</ul>
+  </nav>
+  {industries.map((i, n) => { const [lead, codes, pts, v, l, pj] = detail[i.slug]; return (
+    <section id={i.slug} class:list={['sec scroll-mt-32 xl:scroll-mt-44', n % 2 && 'bg-bg']}>
+      <div class="wrap grid gap-8 lg:grid-cols-2 lg:items-center lg:gap-12">
+        <Pic name={i.img} alt={`${i.name} HVAC project`} class:list={['aspect-[600/428]', n % 2 && 'lg:order-2']} sizes="(min-width:1024px) 600px, 100vw" widths={[400, 800, 1200]} />
+        <div class:list={['lg:max-w-[584px]', n % 2 ? 'lg:order-1' : 'lg:justify-self-end']}>
+          <h2 class="h2">{i.name}</h2>
+          <p class="mt-4 text-[16px] leading-relaxed text-body sm:text-[17px]">{lead}</p>
+          <p class="mt-6 flex flex-wrap gap-2">{codes.map((c) => <span class="bg-orange px-2.5 py-1 font-display text-[14px] font-bold">{c}</span>)}</p>
+          <ul class="mt-6 space-y-2.5 text-[15.5px]">{pts.map((p) => <li class="flex gap-3"><Icon name="check" size={18} class="mt-0.5 shrink-0 text-orange" />{p}</li>)}</ul>
+          <p class="mt-8 flex flex-wrap items-baseline gap-x-4 gap-y-1 border-t border-line pt-6"><span class="font-display text-[32px] font-bold leading-none">{v}</span><span class="text-[14.5px] text-body">{l}</span>{pj && <a href={`/projects/${pj}/`} class="ulink ml-auto text-[14.5px]">Case study</a>}</p>
+        </div>
+      </div>
+    </section>); })}
+  <Proposal />
+</Base>

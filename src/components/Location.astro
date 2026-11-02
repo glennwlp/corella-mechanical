@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from './PageHero.astro';
+import Icon from './Icon.astro';
+import Pic from './Pic.astro';
+import TrustStrip from './TrustStrip.astro';
+import SecHead from './SecHead.astro';
+import ServiceMap from './ServiceMap.astro';
+import BreakdownBand from './BreakdownBand.astro';
+import Proposal from './Proposal.astro';
+import { phone, tel, branches } from '../data/site';
+import { bySlug } from '../data/projects';
+interface Props { k: 'sydney' | 'newcastle'; title: string; seo: string; lead: string; hero: string; tag: [string, string]; manager: string; maps: string; areasTitle: string; areasLead: string; areas: [string, string, string[]][]; teamTitle: string; teamLead: string; team: [string, string, string, string][]; projTitle: string; proj: [string, string, string, string][] }
+const d = Astro.props;
+const b = branches[d.k];
+const facts = [['Branch phone', b.phone, b.tel], ['24/7 breakdowns', phone, tel], ['Email', b.email, `mailto:${b.email}`], ['Office hours', 'Mon to Fri, 7am to 5pm'], ['Branch manager', d.manager]];
+---
+<Base title={`${d.seo} | Corella Mechanical`} description={d.lead} active="locations">
+  <PageHero crumbs={[['Home', '/'], ['Locations'], [b.name]]} title={d.title} lead={d.lead} image={d.hero} alt={`Commercial HVAC plant in ${b.name}`} tag={d.tag} tagPos="lg:left-[9%] lg:top-[20%]">
+    <a href="#proposal" class="btn btn-orange">Request a Proposal</a>
+    <a href={tel} class="btn btn-ghost"><Icon name="phone" size={18} />24/7 Breakdowns: {phone}</a>
+  </PageHero>
+  <TrustStrip />
+  <section class="sec"><div class="wrap grid gap-4 lg:grid-cols-[minmax(0,520px)_minmax(0,664px)] lg:justify-between lg:gap-8">
+    <div class="bg-ink p-6 text-white sm:p-10">
+      <p class="text-[14px] font-semibold text-steel">{b.branch}</p>
+      <p class="mt-2 font-display text-[28px] font-bold leading-[1.15] sm:text-[34px]">{b.street}<br />{b.suburb}</p>
+      <dl class="mt-7 border-t border-white/15">{facts.map(([l, v, h]) => <div class="grid grid-cols-[110px_minmax(0,1fr)] gap-3 border-b border-white/15 py-3 sm:grid-cols-[160px_minmax(0,1fr)]"><dt class="text-[14px] text-steel">{l}</dt><dd class="text-[15px] font-semibold break-words sm:text-[15.5px]">{h ? <a href={h} class="hover:text-orange">{v}</a> : v}</dd></div>)}</dl>
+      <div class="mt-7 flex flex-col gap-3 sm:flex-row"><a href="#proposal" class="btn btn-orange !min-h-[48px] !text-[14px]">Request a Proposal</a><a href={d.maps} target="_blank" rel="noopener" class="btn btn-ghost !min-h-[48px] !text-[14px]"><Icon name="pin" size={16} />Get directions</a></div>
+    </div>
+    <ServiceMap focus={d.k} />
+  </div></section>
+  <section class="sec bg-bg"><div class="wrap grid gap-10 lg:grid-cols-[minmax(0,520px)_minmax(0,672px)] lg:justify-between">
+    <div><h2 class="h2">{d.areasTitle}</h2><p class="mt-5 text-[16px] leading-relaxed text-body sm:text-[17px]">{d.areasLead}</p></div>
+    <div class="grid grid-cols-2 gap-8 sm:grid-cols-3">{d.areas.map(([t, s, list]) => <div><h3 class="text-[22px]">{t}</h3><p class="text-[13px] font-semibold text-orange-dark">{s}</p><ul class="mt-3 space-y-1.5 text-[15px] text-body">{list.map((x) => <li>{x}</li>)}</ul></div>)}</div>
+  </div></section>
+  <section class="sec"><div class="wrap">
+    <SecHead title={d.teamTitle} lead={d.teamLead} />
+    <div class="mt-10 grid grid-cols-2 gap-x-4 gap-y-8 lg:mt-14 lg:grid-cols-4">{d.team.map(([n, r, x, im]) => <div><Pic name={im} alt={`${n}, ${r}`} class="aspect-[300/320]" sizes="(min-width:1024px) 300px, 50vw" widths={[300, 600]} /><h3 class="mt-4 text-[19px] sm:text-[24px]">{n}</h3><p class="mt-1 text-[14.5px] text-body">{r}</p><p class="mt-1 text-[13.5px] text-body">{x}</p></div>)}</div>
+  </div></section>
+  <section class="sec bg-bg"><div class="wrap">
+    <SecHead title={d.projTitle} link={['See all projects', '/projects/']} />
+    <div class="mt-10 grid gap-4 lg:mt-14 lg:grid-cols-2">
+      {d.proj.map(([slug, t, v, l]) => { const p = bySlug(slug)!; return (
+        <a href={`/projects/${slug}/`} class="group grid bg-white sm:grid-cols-[minmax(0,280px)_minmax(0,1fr)]">
+          <Pic name={p.img} alt={p.title} class="aspect-[16/10] sm:aspect-auto sm:min-h-[320px]" sizes="(min-width:640px) 280px, 100vw" widths={[300, 600]}><span class="tag absolute top-5 left-5 sm:top-6 sm:left-[45px]"><span><b>{p.code}</b><span>{p.sector}, {p.place}</span></span></span></Pic>
+          <div class="flex flex-col p-6 sm:p-8"><h3 class="text-[24px] leading-tight group-hover:text-orange-dark sm:text-[26px]">{t}</h3><p class="mt-6 font-display text-[40px] font-bold leading-none sm:mt-auto">{v}</p><p class="mt-2 text-[13.5px] text-body">{l}</p><span class="ulink mt-5 self-start">Read the case study</span></div>
+        </a>); })}
+    </div>
+  </div></section>
+  <BreakdownBand />
+  <Proposal />
+</Base>

@@ -1,0 +1,8 @@
+---
+interface Props { dark?: boolean; small?: boolean }
+const { dark = false, small = false } = Astro.props;
+---
+<a href="/" class="inline-flex items-center gap-2.5" aria-label="Corella Mechanical home">
+  <svg width={small ? 26 : 32} height={small ? 26 : 32} viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#ff5f1f"/><rect x="7" y="8" width="18" height="3.2" fill="#1f2328"/><rect x="7" y="14.4" width="12" height="3.2" fill="#1f2328"/><rect x="7" y="20.8" width="7" height="3.2" fill="#1f2328"/></svg>
+  <span class:list={['font-display leading-none whitespace-nowrap', small ? 'text-[20px]' : 'text-[24px] xl:text-[28px]']}><b class:list={['font-extrabold', dark ? 'text-white' : 'text-ink']}>Corella</b> <span class:list={['font-medium', dark ? 'text-steel' : 'text-[#8a96a0]']}>Mechanical</span></span>
+</a>

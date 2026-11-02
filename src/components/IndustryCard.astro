@@ -1,0 +1,13 @@
+---
+import Pic from './Pic.astro';
+interface Props { i: { slug: string; name: string; img: string; short: string } }
+const { i } = Astro.props;
+---
+<a href={`/industries/#${i.slug}`} class="group block">
+  <Pic name={i.img} alt={`${i.name} HVAC`} class="aspect-[405/300]" imgClass="transition duration-500 group-hover:scale-[1.03]" sizes="(min-width:1024px) 405px, (min-width:640px) 50vw, 100vw" widths={[420, 640, 840]}>
+    <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/90 via-ink/60 to-transparent px-5 pt-14 pb-5 sm:px-6">
+      <h3 class="text-[28px] text-white sm:text-[32px]">{i.name}</h3>
+      <p class="mt-1 text-[14px] text-mist">{i.short}</p>
+    </div>
+  </Pic>
+</a>

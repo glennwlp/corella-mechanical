@@ -1,0 +1,27 @@
+---
+interface Props { focus?: 'sydney' | 'newcastle' | 'both'; compact?: boolean }
+const { focus = 'both', compact = false } = Astro.props;
+const vb = compact ? (focus === 'newcastle' ? '160 40 520 253' : '40 395 520 253') : '0 0 720 720';
+const towns = [['Maitland', 363, 161], ['Cessnock', 308, 221], ['Lake Macquarie', 433, 271], ['Gosford', 408, 376], ['Penrith', 178, 446]] as const;
+---
+<div class:list={["relative w-full", compact ? "aspect-[616/300]" : "aspect-square", "overflow-hidden bg-map"]} role="img" aria-label="Service area map showing the Silverwater branch covering Sydney and the Central Coast and the Mayfield West branch covering Newcastle and the Hunter">
+  <svg viewBox={vb} preserveAspectRatio="xMidYMid slice" class="absolute inset-0 size-full" aria-hidden="true">
+    <defs><pattern id="g" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0v48" fill="none" stroke="#bfc8cf" stroke-width="1"/></pattern></defs>
+    <rect width="720" height="720" fill="url(#g)"/>
+    <path d="M560 0 C540 120 520 200 470 300 C430 380 420 450 380 520 C350 580 330 650 300 720 H720 V0Z" fill="#d7dce0"/>
+    <path d="M560 0 C540 120 520 200 470 300 C430 380 420 450 380 520 C350 580 330 650 300 720" fill="none" stroke="#aeb7bf" stroke-width="2"/>
+    <circle cx="460" cy="190" r="150" fill={focus !== 'sydney' ? 'rgba(255,95,31,.10)' : 'rgba(255,95,31,.04)'} stroke="#ff5f1f" stroke-width="2" stroke-dasharray="8 7" opacity={focus === 'sydney' ? .45 : 1}/>
+    <circle cx="250" cy="520" r="170" fill={focus !== 'newcastle' ? 'rgba(255,95,31,.10)' : 'rgba(255,95,31,.04)'} stroke="#ff5f1f" stroke-width="2" stroke-dasharray="8 7" opacity={focus === 'newcastle' ? .45 : 1}/>
+    <path d="M460 190 L250 520" stroke="#1f2328" stroke-width="2" stroke-dasharray="6 6"/>
+    <rect x="452" y="182" width="16" height="16" fill="#1f2328"/><rect x="458" y="188" width="4" height="4" fill="#ff5f1f"/>
+    <rect x="242" y="512" width="16" height="16" fill="#1f2328"/><rect x="248" y="518" width="4" height="4" fill="#ff5f1f"/>
+    {towns.map(([n, x, y]) => <g><circle cx={x - 10} cy={y - 4} r="3.5" fill="#1f2328"/><text x={x} y={y} font-size="13" font-family="IBM Plex Sans" font-weight="500" fill="#3d444b">{n}</text></g>)}
+    <text x="202" y="345" font-size="13" font-family="IBM Plex Sans" font-weight="600" fill="#1f2328" transform="rotate(-57 202 345)">160 km by road</text>
+    <text x="560" y="560" font-size="13" font-family="IBM Plex Sans" fill="#6e7a84">Tasman Sea</text>
+  </svg>
+  {!compact ? <>
+  <span class="tag absolute top-[13%] left-[52%] max-w-[44%]"><span><b>Mayfield West</b><span>Newcastle and the Hunter</span></span></span>
+  <span class="tag absolute top-[73%] left-[4%] max-w-[50%] sm:left-[20%]"><span><b>Silverwater</b><span>Sydney metro and Central Coast</span></span></span>
+  </> : <span class="tag absolute top-6 left-6"><span><b>{focus === 'newcastle' ? 'Mayfield West' : 'Silverwater'}</b><span>Branch and workshop</span></span></span>}
+  <p class="absolute bottom-3 left-4 text-[11px] text-slate sm:bottom-5 sm:left-6 sm:text-[12px]">Service areas shown are indicative [sample]</p>
+</div>

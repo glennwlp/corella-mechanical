@@ -1,0 +1,9 @@
+---
+interface Props { title: string; lead?: string; dark?: boolean; link?: [string, string] }
+const { title, lead, dark = false, link } = Astro.props;
+---
+<div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
+  <h2 class:list={['h2 max-w-[640px]', dark && 'text-white']} set:html={title} />
+  {lead && <p class:list={['max-w-[500px] text-[16px] leading-relaxed sm:text-[17px]', dark ? 'text-fog' : 'text-body']} set:html={lead} />}
+  {link && <a href={link[1]} class="ulink self-start text-[15px] font-semibold lg:self-end">{link[0]}</a>}
+</div>

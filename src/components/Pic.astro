@@ -1,0 +1,11 @@
+---
+import { Image } from 'astro:assets';
+import { img } from './img';
+interface Props { name: string; alt: string; class?: string; imgClass?: string; sizes?: string; widths?: number[]; tag?: string | false; eager?: boolean; pos?: string }
+const { name, alt, class: cls = '', imgClass = '', sizes = '100vw', widths = [400, 800, 1200], tag = 'Sample imagery', eager = false, pos = '' } = Astro.props;
+---
+<div class:list={['relative overflow-hidden bg-ink', cls]}>
+  <Image src={img(name)} alt={alt} widths={widths} sizes={sizes} loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : 'auto'} class:list={['absolute inset-0 size-full object-cover', imgClass]} style={pos ? `object-position:${pos}` : undefined} />
+  <slot />
+  {tag && <span class="sample">{tag}</span>}
+</div>

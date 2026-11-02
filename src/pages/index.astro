@@ -1,7 +1,107 @@
 ---
 import Base from '../layouts/Base.astro';
+import Pic from '../components/Pic.astro';
+import Icon from '../components/Icon.astro';
+import TrustStrip from '../components/TrustStrip.astro';
+import Proposal from '../components/Proposal.astro';
+import BreakdownBand from '../components/BreakdownBand.astro';
+import CaseCard from '../components/CaseCard.astro';
+import IndustryCard from '../components/IndustryCard.astro';
+import ServiceMap from '../components/ServiceMap.astro';
+import { phone, tel, branches, industries } from '../data/site';
+import { projects } from '../data/projects';
+const problem = [['34°C', 'Office floor temperature by 2pm after a chiller trip in January [sample]'], ['3 hrs', 'Average time before tenants start leaving a hot floor [sample]'], ['$18k', 'Lost covers for one 120-seat restaurant on a Friday night outage [sample]'], ['42', 'Clinic appointments rescheduled when two treatment rooms overheated [sample]']];
+const services = [
+  ['Design and install', 'p5511098', 'Engineered systems for new builds, fit-outs and plant replacements. VRF, chilled water, ducted and packaged.', 'Commercial services', '/commercial/'],
+  ['Maintenance contracts', 'p5463581', 'Scheduled servicing, compliance records and priority response under one fixed annual price.', 'Contract tiers', '/maintenance-contracts/'],
+  ['24/7 breakdowns', 'p5463575', 'Technicians on call every night of the year, with a 4 hour on-site target across Sydney metro.', `Call ${phone}`, tel],
+  ['Premium residential', 'p13722886', 'Ducted and multi-zone systems for architect-designed homes, installed by our commercial crews.', 'Residential', '/residential/'],
+];
+const why = [['Response you can hold us to', '4 hour on-site target in Sydney metro and Newcastle, 6 hours regional. Reported monthly against every contract.'], ['Engineering-led design', 'In-house mechanical engineers size every system, so plant is not oversized to cover guesswork.'], ['Compliance handled', 'AS/NZS 3666 microbial control, essential services records and refrigerant logs, uploaded to your portal.'], ['Safety first', 'Site-specific SWMS, height-safety certified crews, zero lost-time injuries in 2025 [sample].'], ['Minimal disruption', 'After-hours works, staged shutdowns and crane lifts booked around your trading hours.']];
+const clients = [['Harbourline', 'Property', 'font-display font-extrabold text-[22px]'], ['KESTREL', 'HEALTH', 'font-bold text-[17px] tracking-wider'], ['Northbridge', 'Strata', 'font-display font-semibold text-[22px]'], ['Ironbark', 'Hotels', 'text-[17px]'], ['Meridian', 'Retail Group', 'font-display font-medium text-[22px]'], ['Hunter', 'Grammar', 'font-bold text-[17px]']];
+const reviews = [['“Our old contractor fixed what broke. Corella told us what was about to break, priced it, and did it over a long weekend. We have not had a hot floor since.”', 'Facilities manager, A-grade office portfolio, North Sydney [sample]'], ['“They staged the theatre works around our surgical list for three weeks and never once asked us to cancel a patient. The commissioning report was the best we have received.”', 'Engineering services lead, private hospital, Hunter region [sample]']];
+const tags = [['CU-07', '28 kW VRF condenser, serviced 14 Oct', 'left-[9%] top-[12%]'], ['CU-12', 'Leak check passed, R32 logged', 'left-[63%] top-[8%] hidden lg:inline-flex'], ['CU-21', 'Coil clean scheduled for November', 'left-[3%] top-[75%] hidden lg:inline-flex']];
 ---
-<Base title="Corella Mechanical">
-  <h1 class="text-4xl font-bold sm:text-5xl">Corella Mechanical</h1>
-  <p class="mt-4 text-lg text-gray-600">Coming soon.</p>
+<Base title="Corella Mechanical | Commercial HVAC, Sydney and the Hunter" description="Design, installation and maintenance of commercial air-conditioning for offices, retail, hospitality, medical and strata sites across Sydney and the Hunter." active="home">
+  <section class="bg-ink text-white lg:grid lg:min-h-[720px] lg:grid-cols-[minmax(0,660fr)_minmax(0,780fr)]">
+    <Pic name="p19016904" alt="Rows of commercial air-conditioning condensers on a rooftop" eager class="h-[300px] sm:h-[420px] lg:order-2 lg:h-auto" sizes="(min-width:1024px) 54vw, 100vw" widths={[480, 800, 1200, 1600]}>
+      {tags.map(([c, d, pos]) => <span class:list={['tag absolute max-w-[80%]', pos]}><span><b>{c}</b><span>{d}</span></span></span>)}
+    </Pic>
+    <div class="wrap flex flex-col justify-center py-8 sm:py-12 lg:order-1 lg:!pr-10 lg:py-20">
+      <h1 class="h1-xl max-w-[520px]">Commercial HVAC That Keeps Your Business Running</h1>
+      <p class="mt-5 max-w-[460px] text-[16px] leading-relaxed text-fog sm:text-[18px]">Design, installation and maintenance of commercial air-conditioning for offices, retail, hospitality, medical and strata sites across Sydney and the Hunter.</p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col min-[1400px]:flex-row">
+        <a href="#proposal" class="btn btn-orange">Request a Proposal</a>
+        <a href={tel} class="btn btn-ghost"><Icon name="phone" size={18} />24/7 Breakdowns: {phone}</a>
+      </div>
+      <dl class="mt-10 grid max-w-[500px] grid-cols-3 gap-4 border-t border-white/15 pt-6">
+        {[['1,400+', 'sites on maintenance [sample]'], ['40', 'licensed technicians [sample]'], ['2', 'branches, one standard']].map(([a, b]) => <div><dt class="font-display text-[30px] font-bold leading-none sm:text-[34px]">{a}</dt><dd class="mt-2 text-[12.5px] text-steel sm:text-[13px]">{b}</dd></div>)}
+      </dl>
+    </div>
+  </section>
+  <TrustStrip />
+
+  <section class="sec">
+    <div class="wrap grid gap-10 lg:grid-cols-[minmax(0,520px)_minmax(0,584px)] lg:justify-between">
+      <div><h2 class="h2 max-w-[520px] lg:text-[60px]">When the air-con stops, so does business</h2><p class="mt-6 max-w-[470px] text-[16px] leading-relaxed text-body sm:text-[17px]">A failed chiller or a tripped VRF system is rarely just a comfort problem. It shuts tenancies, cancels patients and empties dining rooms. We design plant that holds up on the worst day of summer, and keep the systems you already have running.</p></div>
+      <dl class="border-t border-line">{problem.map(([a, b]) => <div class="grid grid-cols-[96px_1fr] items-center gap-4 border-b border-line py-5 sm:grid-cols-[158px_1fr]"><dt class="font-display text-[34px] font-bold text-orange sm:text-[44px]">{a}</dt><dd class="text-[15px] sm:text-[16px]">{b}</dd></div>)}</dl>
+    </div>
+  </section>
+
+  <section class="sec bg-bg">
+    <div class="wrap">
+      <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between"><h2 class="h2 max-w-[560px]">Four ways we look after your plant</h2><p class="max-w-[440px] text-[16px] text-body sm:text-[17px]">From a single tenancy fit-out to a portfolio of 40 sites, one team designs it, installs it and keeps it running.</p></div>
+      <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:mt-14 xl:grid-cols-4">
+        {services.map(([t, im, d, l, h]) => <article class="flex flex-col bg-white"><Pic name={im} alt={t} class="aspect-[300/220]" sizes="(min-width:1280px) 300px, (min-width:640px) 50vw, 100vw" widths={[320, 640]} /><div class="flex flex-1 flex-col p-6"><h3 class="text-[26px] sm:text-[28px]">{t}</h3><p class="mt-3 text-[15px] leading-relaxed text-body">{d}</p><a href={h} class="ulink mt-auto self-start pt-6 text-[15px] font-semibold">{l}</a></div></article>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-ink text-white lg:grid lg:grid-cols-2">
+    <div class="wrap py-16 lg:max-w-none lg:!pr-12 lg:py-28">
+      <h2 class="h2 max-w-[600px] text-white lg:text-[56px]">Two branches. One standard.</h2>
+      <p class="mt-6 max-w-[520px] text-[16px] leading-relaxed text-fog sm:text-[17px]">Silverwater covers Sydney, the Central Coast and the Blue Mountains foothills. Mayfield West covers Newcastle and the Hunter. Same procedures, same reporting portal, same engineers signing off the work.</p>
+      <div class="mt-10 hidden gap-8 border-t border-white/15 pt-8 sm:grid sm:grid-cols-2 lg:mt-14">
+        {Object.values(branches).map((b) => <div><h3 class="text-[30px]">{b.name}</h3><p class="text-[14px] text-steel">{b.branch}</p><p class="mt-3 text-[15px] text-mist">{b.street}</p><a href={b.tel} class="mt-2 inline-flex items-center gap-2 text-[15px] font-semibold"><Icon name="phone" size={15} class="text-orange" />{b.phone}</a><p class="mt-1 text-[14px] text-steel">{b.techs}</p><a href={b.href} class="mt-4 inline-block text-[15px] font-semibold text-orange hover:underline">View {b.name} branch</a></div>)}
+      </div>
+    </div>
+    <ServiceMap />
+    <div class="wrap pb-14 sm:hidden">
+      {Object.values(branches).map((b) => <a href={b.href} class="block border-t-2 border-orange py-5"><h3 class="text-[26px]">{b.name}</h3><p class="text-[14px] text-steel">{b.branch}</p><p class="mt-2 text-[15px] text-mist">{b.street}</p><p class="mt-2 inline-flex items-center gap-2 text-[15px] font-semibold"><Icon name="phone" size={15} class="text-orange" />{b.phone}</p></a>)}
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap grid gap-10 lg:grid-cols-[minmax(0,520px)_minmax(0,664px)] lg:justify-between lg:gap-12">
+      <Pic name="p34670929" alt="Two Corella technicians in hi-vis on a commercial site" class="aspect-[4/3] sm:aspect-[520/640] sm:max-w-[520px]" sizes="(min-width:1024px) 520px, 100vw" widths={[400, 700, 1040]} pos="center 30%" />
+      <div>
+        <h2 class="h2 max-w-[600px]">Why facility managers stay with us</h2>
+        <dl class="mt-10 border-t border-line">{why.map(([a, b]) => <div class="grid gap-2 border-b border-line py-5 md:grid-cols-[220px_1fr] md:gap-8"><dt class="font-display text-[22px] font-bold leading-tight sm:text-[24px]">{a}</dt><dd class="text-[15.5px] leading-relaxed text-body">{b}</dd></div>)}</dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec bg-bg">
+    <div class="wrap">
+      <div class="flex flex-wrap items-end justify-between gap-4"><h2 class="h2 max-w-[640px]">Built for the sites you manage</h2><a href="/industries/" class="ulink text-[15px] font-semibold">See all industries</a></div>
+      <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3">{industries.map((i) => <IndustryCard i={i} />)}</div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="flex flex-wrap items-end justify-between gap-4"><div><h2 class="h2">Recent projects</h2><p class="mt-4 max-w-[560px] text-[16px] text-body sm:text-[17px]">Real constraints, measured results. Figures shown are samples for this demo.</p></div><a href="/projects/" class="ulink text-[15px] font-semibold">See all projects</a></div>
+      <div class="mt-10 grid gap-4 md:grid-cols-2 lg:mt-14 lg:grid-cols-3">{projects.slice(0, 3).map((p) => <CaseCard p={p} full />)}</div>
+    </div>
+  </section>
+
+  <section class="sec bg-bg">
+    <div class="wrap">
+      <p class="text-[14px] font-semibold text-body">Trusted by property and facility teams [sample client names]</p>
+      <ul class="mt-6 grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 lg:grid-cols-6">{clients.map(([a, b, c]) => <li class="flex items-baseline gap-2 text-slate"><span class={c}>{a}</span><span class="text-[13px] text-mute">{b}</span></li>)}</ul>
+      <div class="mt-12 grid gap-10 border-t border-line pt-12 lg:grid-cols-2 lg:gap-16">{reviews.map(([q, w]) => <figure><p class="text-[13px] font-semibold text-orange-dark">★★★★★ &nbsp;Google review [sample]</p><blockquote class="mt-4 font-display text-[23px] font-medium leading-[1.25] sm:text-[28px]">{q}</blockquote><figcaption class="mt-5 text-[14.5px] text-body">{w}</figcaption></figure>)}</div>
+    </div>
+  </section>
+  <BreakdownBand />
+  <Proposal />
 </Base>

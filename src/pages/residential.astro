@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import Pic from '../components/Pic.astro';
+import TrustStrip from '../components/TrustStrip.astro';
+import SecHead from '../components/SecHead.astro';
+import Proposal from '../components/Proposal.astro';
+import { phone, tel } from '../data/site';
+const why = [['Designed room by room', 'Heat loads for every room, window and orientation, so a west-facing living room is not fighting the same unit as a cool bedroom.', '12 zones', 'largest home system to date [sample]'], ['Quiet by design', 'Indoor units and outdoor condensers selected and placed for noise, with acoustic screens where neighbours are close.', '19 dB(A)', 'indoor units at low fan [sample]'], ['Out of sight', 'Linear slot diffusers, concealed returns and plant screens coordinated with your architect’s drawings.', '0', 'visible indoor units in most homes']];
+const sys = [['DUCT', 'Ducted zoned systems', 'Whole-of-home comfort through ceiling or floor outlets, with up to 8 zones on one system.'], ['VRF', 'Residential VRF', 'Multiple indoor units on one quiet outdoor condenser. Ideal for large or multi-level homes.'], ['AIR', 'Fresh air and heat recovery', 'Filtered outside air for airtight new builds, without losing the energy you paid to cool.'], ['CTRL', 'Controls and integration', 'Room sensors, app control and integration with Control4, C-Bus or KNX systems.']];
+const steps = [['Concept design', 'Plant location, outlet strategy and an early budget'], ['Documentation', 'Coordinated mechanical drawings for your builder'], ['Rough-in', 'Ductwork and pipework before plasterboard goes up'], ['Fit-off and commissioning', 'Air balancing, controls set-up and a handover walk-through']];
+---
+<Base title="Premium Residential Air-Conditioning | Corella Mechanical" description="Quiet, concealed ducted and VRF systems for architect-designed homes and major renovations in Sydney and Newcastle, designed room by room." active="residential">
+  <PageHero crumbs={[['Home', '/'], ['Residential']]} title="Premium home air-conditioning, engineered like a commercial job" lead="For architect-designed homes and major renovations in Sydney and Newcastle. Quiet, concealed systems, designed room by room and installed by our commercial crews." image="p13722886" alt="Architect-designed living room with concealed air-conditioning" tag={['ZONE 4', 'Main suite, 22°C, 19 dB(A) [sample]']} tagPos="lg:left-[9%] lg:top-[18%]">
+    <a href="#proposal" class="btn btn-orange">Book a home consultation</a>
+    <a href={tel} class="btn btn-ghost"><Icon name="phone" size={18} />24/7 Breakdowns: {phone}</a>
+  </PageHero>
+  <TrustStrip />
+  <section class="sec"><div class="wrap">
+    <SecHead title="What a commercial contractor brings to a home" lead="Most residential installs are sized by rule of thumb. We run the same heat load software we use for office towers." />
+    <div class="mt-10 grid gap-10 md:grid-cols-3 md:gap-8 lg:mt-16">
+      {why.map(([t, d, v, l]) => <div class="border-t-2 border-ink pt-6"><h3 class="text-[26px] sm:text-[28px]">{t}</h3><p class="mt-3 text-[15.5px] leading-relaxed text-body">{d}</p><p class="mt-6 font-display text-[40px] font-bold leading-none sm:text-[44px]">{v}</p><p class="mt-2 text-[13.5px] text-body">{l}</p></div>)}
+    </div>
+  </div></section>
+  <section class="sec bg-bg"><div class="wrap grid gap-10 lg:grid-cols-[minmax(0,560px)_minmax(0,600px)] lg:justify-between lg:gap-12">
+    <Pic name="p29012619" alt="Concealed linear slot diffuser in a modern home" class="aspect-[4/3] sm:aspect-[560/536]" sizes="(min-width:1024px) 560px, 100vw" widths={[400, 800, 1120]} />
+    <div>
+      <h2 class="h2">Systems we install in homes</h2>
+      <ul class="mt-8 border-t border-line">{sys.map(([c, t, d]) => <li class="grid grid-cols-[60px_1fr] gap-4 border-b border-line py-5"><span class="self-start bg-orange px-2 py-1 text-center font-display text-[15px] font-bold">{c}</span><div><h3 class="text-[22px]">{t}</h3><p class="mt-1.5 text-[15px] leading-relaxed text-body">{d}</p></div></li>)}</ul>
+    </div>
+  </div></section>
+  <section class="bg-ink text-white"><div class="wrap grid gap-10 py-16 lg:grid-cols-[minmax(0,560px)_minmax(0,584px)] lg:justify-between lg:py-28">
+    <div><h2 class="text-[36px] sm:text-[48px]">Working with your architect and builder</h2><p class="mt-6 text-[16px] leading-relaxed text-fog sm:text-[17px]">Bring us in at design stage and we will coordinate plant space, bulkheads, penetrations and electrical loads before the slab is poured. Already building? We work to your builder’s programme.</p></div>
+    <ol class="border-t border-white/15">{steps.map(([t, d], i) => <li class="flex gap-5 border-b border-white/15 py-5"><span class="w-6 font-display text-[26px] font-bold leading-none text-orange">{i + 1}</span><div><p class="text-[16px] font-semibold">{t}</p><p class="mt-1 text-[14.5px] text-steel">{d}</p></div></li>)}</ol>
+  </div></section>
+  <section class="sec"><div class="wrap grid gap-10 lg:grid-cols-[minmax(0,540px)_minmax(0,624px)] lg:items-center lg:justify-between lg:gap-12">
+    <div class="lg:order-1">
+      <p class="text-[14px] font-semibold text-body">Recent home project</p>
+      <h2 class="mt-3 text-[32px] leading-[1.1] sm:text-[40px]">Six-zone VRF in a heritage home, with nothing visible from the street</h2>
+      <p class="mt-5 text-[16px] leading-relaxed text-body sm:text-[16.5px]">Outdoor plant went into a screened lightwell and every indoor unit sits above a concealed slot diffuser. Installed during the renovation over five weeks.</p>
+      <dl class="mt-8 grid max-w-[480px] grid-cols-3 gap-4">{[['6', 'zones'], ['5 wks', 'install'], ['21 dB(A)', 'loudest room [sample]']].map(([a, b]) => <div><dt class="font-display text-[30px] font-bold leading-none sm:text-[40px]">{a}</dt><dd class="mt-2 text-[13.5px] text-body">{b}</dd></div>)}</dl>
+    </div>
+    <Pic name="p20653888" alt="Renovated heritage home interior" class="order-first aspect-[624/448] lg:order-2" sizes="(min-width:1024px) 624px, 100vw" widths={[400, 800, 1250]}>
+      <span class="tag absolute top-5 left-5 sm:top-8 sm:left-[53px]"><span><b>PRJ-R118</b><span>Residence, Mosman</span></span></span>
+    </Pic>
+  </div></section>
+  <Proposal title="Book a home consultation" />
+</Base>

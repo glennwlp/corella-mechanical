@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import Pic from '../components/Pic.astro';
+import TrustStrip from '../components/TrustStrip.astro';
+import SecHead from '../components/SecHead.astro';
+import Proposal from '../components/Proposal.astro';
+import { phone, tel } from '../data/site';
+const hist = [['2004', 'Founded in Silverwater', 'Three technicians servicing office buildings in Parramatta.'], ['2011', 'ISO 9001 certified', 'Quality system audited and the first portfolio contract signed.'], ['2016', 'Mayfield West opens', 'A second branch for Newcastle, Lake Macquarie and the Hunter.'], ['2020', 'Engineering team formed', 'In-house design for VRF, chilled water and medical projects.'], ['2025', '1,400 sites on contract', 'Forty technicians and a 24/7 roster across both branches.']];
+const how = [['An engineer signs off every job', 'Every install and every major repair is reviewed by a qualified mechanical engineer before handover.'], ['We report against our own targets', 'Response times, first-time fix rate and PPM completion are reported to every contract client monthly.'], ['Safety stops the job', 'Any technician can stop work if something is unsafe, and nobody is questioned for doing it.']];
+const acc = [['NSW contractor licence', '000000C [sample]'], ['ARC refrigerant trading authorisation', 'AU00000 [sample]'], ['ISO 9001 quality management', 'Certified [sample]'], ['ISO 45001 safety management', 'Certified [sample]'], ['Public liability and PI', '$20M each [sample]'], ['Lost-time injuries, 2025', '0 [sample]']];
+---
+<Base title="About Corella Mechanical | Commercial HVAC Since 2004" description="Engineers and technicians who run commercial plant for a living. Two branches, 40 technicians and more than 1,400 sites across Sydney and the Hunter." active="about">
+  <PageHero crumbs={[['Home', '/'], ['About']]} title="Engineers and technicians who run commercial plant for a living" lead="Corella Mechanical started in a Silverwater workshop in 2004 with three technicians and one service van. Today we look after more than 1,400 sites across Sydney and the Hunter [sample history]." image="p37636256" alt="Corella technicians on a commercial rooftop">
+    <a href="#proposal" class="btn btn-orange">Request a Proposal</a>
+    <a href={tel} class="btn btn-ghost"><Icon name="phone" size={18} />24/7 Breakdowns: {phone}</a>
+  </PageHero>
+  <TrustStrip />
+  <section class="sec"><div class="wrap">
+    <SecHead title="Twenty years, two branches" lead="A fictional company history, written for this demo." />
+    <ol class="mt-10 grid gap-0 sm:grid-cols-2 sm:gap-x-8 lg:mt-14 lg:grid-cols-5 lg:gap-x-6">{hist.map(([y, t, d]) => <li class="grid grid-cols-[76px_1fr] gap-x-4 border-t-2 border-ink py-5 lg:block lg:pt-7"><span class="font-display text-[30px] font-bold leading-none text-orange lg:text-[40px]">{y}</span><div class="lg:mt-12"><h3 class="text-[22px] leading-tight sm:text-[24px]">{t}</h3><p class="mt-2 text-[15px] leading-relaxed text-body">{d}</p></div></li>)}</ol>
+  </div></section>
+  <section class="bg-ink text-white"><div class="wrap py-16 lg:py-28">
+    <h2 class="h2 text-white">How we work</h2>
+    <div class="mt-10 grid gap-10 md:grid-cols-3 md:gap-4 lg:mt-14">{how.map(([t, d]) => <div class="border-t border-white/20 pt-6 lg:pr-12"><h3 class="text-[26px] leading-tight sm:text-[30px]">{t}</h3><p class="mt-4 text-[16px] leading-relaxed text-fog">{d}</p></div>)}</div>
+  </div></section>
+  <section class="sec"><div class="wrap grid gap-10 lg:grid-cols-[minmax(0,520px)_minmax(0,664px)] lg:justify-between lg:gap-12">
+    <Pic name="p8293646" alt="Technician in height-safety harness on a roof" class="aspect-[4/3] sm:aspect-[520/536]" sizes="(min-width:1024px) 520px, 100vw" widths={[400, 800, 1040]} />
+    <div>
+      <h2 class="h2">Safety and accreditation</h2>
+      <p class="mt-5 text-[16px] leading-relaxed text-body sm:text-[17px]">Numbers below are placeholders for this demo. A live site would link each one to the issuing body.</p>
+      <dl class="mt-8 border-t border-line">{acc.map(([a, b]) => <div class="flex flex-wrap justify-between gap-x-6 gap-y-1 border-b border-line py-4"><dt class="text-[15px] sm:text-[16px]">{a}</dt><dd class="text-[15px] font-semibold sm:text-[16px]">{b}</dd></div>)}</dl>
+    </div>
+  </div></section>
+  <section id="careers" class="scroll-mt-24 bg-bg"><div class="wrap grid gap-8 py-14 lg:grid-cols-[minmax(0,720px)_auto] lg:items-center lg:justify-between lg:py-24">
+    <div><h2 class="text-[32px] leading-[1.08] sm:text-[44px]">We are hiring technicians in Sydney and Newcastle</h2><p class="mt-5 text-[16px] text-body sm:text-[17px]">Licensed refrigeration and air-conditioning technicians, apprentices and project engineers [sample].</p></div>
+    <a href="mailto:careers@corellamech.com.au?subject=Open%20roles" class="btn btn-ink w-full sm:w-[260px] !min-h-[52px]">See open roles</a>
+  </div></section>
+  <Proposal />
+</Base>

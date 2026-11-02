@@ -1,16 +1,16 @@
-# Corella Mechanical
+# Corella Mechanical — demo site
 
-Blank starter site for a fictional Australian HVAC business (demo by AirLeads Builder).
+Fictional commercial HVAC contractor (Sydney and the Hunter), built by AirLeads Builder as a demo.
 
-- Astro (static output) + Tailwind CSS 4 + TypeScript
-- Deployed as a Cloudflare Worker (`corella-mechanical`) serving `./dist` via a static-assets binding only. No secrets.
-- `noindex` meta and `robots.txt` disallow all.
+- Astro (static) + Tailwind 4, served as static assets from a Cloudflare Worker.
+- Live: https://corella-mechanical.glenn-b84.workers.dev/
 
-```sh
-npm install
-npm run dev      # local dev
-npm run build    # outputs ./dist
-npm run deploy   # build + wrangler deploy
+Routes: `/`, `/commercial/`, `/maintenance-contracts/`, `/residential/`, `/industries/`, `/projects/`, `/projects/<code>/` (generated from `src/data/projects.ts`), `/locations/sydney/`, `/locations/newcastle/`, `/about/`, `/contact/`.
+
+```
+npm ci
+npm run build
+npx wrangler deploy
 ```
 
-Live: https://corella-mechanical.glenn-b84.workers.dev
+The proposal form is front-end only and sends nothing. All names, numbers, credentials and figures are samples.

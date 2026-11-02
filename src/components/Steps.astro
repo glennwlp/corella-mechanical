@@ -1,0 +1,7 @@
+---
+interface Props { steps: [string, string, string][]; cols?: string }
+const { steps, cols = 'lg:grid-cols-6' } = Astro.props;
+---
+<ol class:list={['grid gap-0 sm:grid-cols-2 sm:gap-x-8 lg:gap-x-6', cols]}>
+  {steps.map(([t, w, d], i) => <li class="grid grid-cols-[44px_1fr] gap-x-3 border-t-2 border-ink py-5 lg:block lg:pt-6"><span class="font-display text-[32px] font-bold leading-none lg:text-[36px]">{i + 1}</span><div class="lg:mt-12"><h3 class="text-[22px] leading-tight sm:text-[24px]">{t}</h3><p class="mt-1.5 text-[13.5px] font-semibold text-orange-dark">{w}</p><p class="mt-2.5 text-[14.5px] leading-relaxed text-body">{d}</p></div></li>)}
+</ol>
