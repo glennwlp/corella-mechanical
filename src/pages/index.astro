@@ -23,14 +23,14 @@ const reviews = [['“Our old contractor fixed what broke. Corella told us what 
 const tags = [['CU-07', '28 kW VRF condenser, serviced 14 Oct', 'left-[9%] top-[12%]'], ['CU-12', 'Leak check passed, R32 logged', 'left-[63%] top-[8%] hidden lg:inline-flex'], ['CU-21', 'Coil clean scheduled for November', 'left-[3%] top-[75%] hidden lg:inline-flex']];
 ---
 <Base title="Corella Mechanical | Commercial HVAC, Sydney and the Hunter" description="Design, installation and maintenance of commercial air-conditioning for offices, retail, hospitality, medical and strata sites across Sydney and the Hunter." active="home">
-  <section class="bg-ink text-white lg:grid lg:min-h-[720px] lg:grid-cols-[minmax(0,660fr)_minmax(0,780fr)]">
+  <section class="split bg-ink text-white lg:grid lg:min-h-[720px] lg:grid-cols-[minmax(0,660fr)_minmax(0,780fr)]" style="--lw:660px">
     <Pic name="p19016904" alt="Rows of commercial air-conditioning condensers on a rooftop" eager class="h-[300px] sm:h-[420px] lg:order-2 lg:h-auto" sizes="(min-width:1024px) 54vw, 100vw" widths={[480, 800, 1200, 1600]}>
       {tags.map(([c, d, pos]) => <span class:list={['tag absolute max-w-[80%]', pos]}><span><b>{c}</b><span>{d}</span></span></span>)}
     </Pic>
     <div class="wrap flex flex-col justify-center py-8 sm:py-12 lg:order-1 lg:!pr-10 lg:py-20">
       <h1 class="h1-xl max-w-[520px]">Commercial HVAC That Keeps Your Business Running</h1>
       <p class="mt-5 max-w-[460px] text-[16px] leading-relaxed text-fog sm:text-[18px]">Design, installation and maintenance of commercial air-conditioning for offices, retail, hospitality, medical and strata sites across Sydney and the Hunter.</p>
-      <div class="mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col min-[1400px]:flex-row">
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col lg:items-start min-[1400px]:flex-row">
         <a href="#proposal" class="btn btn-orange">Request a Proposal</a>
         <a href={tel} class="btn btn-ghost"><Icon name="phone" size={18} />24/7 Breakdowns: {phone}</a>
       </div>
@@ -57,7 +57,7 @@ const tags = [['CU-07', '28 kW VRF condenser, serviced 14 Oct', 'left-[9%] top-[
     </div>
   </section>
 
-  <section class="bg-ink text-white lg:grid lg:grid-cols-2">
+  <section class="split bg-ink text-white lg:grid lg:grid-cols-2">
     <div class="wrap py-16 lg:max-w-none lg:!pr-12 lg:py-28">
       <h2 class="h2 max-w-[600px] text-white lg:text-[56px]">Two branches. One standard.</h2>
       <p class="mt-6 max-w-[520px] text-[16px] leading-relaxed text-fog sm:text-[17px]">Silverwater covers Sydney, the Central Coast and the Blue Mountains foothills. Mayfield West covers Newcastle and the Hunter. Same procedures, same reporting portal, same engineers signing off the work.</p>

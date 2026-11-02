@@ -4,7 +4,7 @@ import type { Project } from '../data/projects';
 interface Props { p: Project; blurb: string; label?: string }
 const { p, blurb, label = 'Featured project' } = Astro.props;
 ---
-<section class="bg-ink text-white lg:grid lg:min-h-[640px] lg:grid-cols-2">
+<section class="split-r bg-ink text-white lg:grid lg:min-h-[640px] lg:grid-cols-2">
   <Pic name={p.img} alt={p.title} class="h-[280px] sm:h-[420px] lg:h-auto" sizes="(min-width:1024px) 50vw, 100vw" widths={[480, 800, 1200]}>
     <span class="tag absolute top-5 left-5 lg:top-12 lg:left-[69px]"><span><b>{p.code}</b><span>{p.sector}, {p.place}</span></span></span>
   </Pic>

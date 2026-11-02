@@ -77,3 +77,11 @@
   .chip { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-display); font-weight: 700; font-size: 15px; background: var(--color-orange); color: var(--color-ink); padding: 3px 10px; border-radius: 3px; }
   .chip::before { content: ""; width: 6px; height: 6px; border-radius: 99px; background: var(--color-ink); }
 }
+
+/* Wide-screen split sections: keep text aligned to the 1440 container, image bleeds to the edge */
+@media (min-width: 1441px) {
+  .split { grid-template-columns: calc((100% - 1440px) / 2 + var(--lw, 720px)) minmax(0, 1fr) !important; }
+  .split > .wrap { max-width: none; margin: 0; padding-left: calc(100% - var(--lw, 720px) + 96px); }
+  .split-r { grid-template-columns: minmax(0, 1fr) calc((100% - 1440px) / 2 + 720px) !important; }
+  .split-r > div:last-child { padding-right: calc(100% - 720px + 80px); }
+}
